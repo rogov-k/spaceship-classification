@@ -2,12 +2,11 @@ import csv
 
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
 
 
 # #############################################################################
 # Init data
-
 X = []
 y = []
 
@@ -19,20 +18,18 @@ with open('data/response.csv') as f:
         y.append(row[10:][0])
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20)
+
 # #############################################################################
 # Fit model
-
-params = {'n_neighbors': 11}
-classifier = KNeighborsClassifier(**params)
+params = {}
+classifier = DecisionTreeClassifier(**params)
 
 classifier.fit(X_train, y_train)
 y_predict = classifier.predict(X_test)
 
 # #############################################################################
 # Set metrics
-
-# f1 metric
-f = open("result/KNeighborsClassifier.result", "a")
+f = open("result/DecisionTreeClassifier.result", "a")
 f.write(classification_report(y_test, y_predict))
 f.close()
 

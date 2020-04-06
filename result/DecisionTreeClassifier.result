@@ -1,0 +1,14 @@
+                   precision    recall  f1-score   support
+
+          Amateur       0.96      0.96      0.96      8601
+       Globalstar       1.00      1.00      1.00      9555
+Human Spaceflight       0.25      0.24      0.24       436
+         Intelsat       1.00      1.00      1.00     10076
+          Iridium       1.00      1.00      1.00     14916
+       Navigation       0.78      0.80      0.79      2393
+          Orbcomm       1.00      1.00      1.00      7013
+          Weather       0.88      0.87      0.88      4603
+
+        micro avg       0.97      0.97      0.97     57593
+        macro avg       0.86      0.86      0.86     57593
+     weighted avg       0.97      0.97      0.97     57593
