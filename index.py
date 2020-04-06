@@ -5,7 +5,7 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn import preprocessing
 
 # #############################################################################
@@ -43,6 +43,7 @@ y_predict = classifier.predict(X_test)
 # #############################################################################
 # Set metrics
 f = open("result/RandomForestRegressor.result", "a")
+f.write('Cross Validation: ' + str(np.mean(cross_val_score(classifier, X_train, y_train, cv=5))) + '\n')
 f.write('Mean Absolute Error: ' + str(mean_absolute_error(y_test, y_predict)) + '\n')
 f.write('Mean Squared Error: ' + str(mean_squared_error(y_test, y_predict)) + '\n')
 f.write('Root Mean Squared Error: ' + str(np.sqrt(mean_squared_error(y_test, y_predict))) + '\n')

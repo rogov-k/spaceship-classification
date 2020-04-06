@@ -1,3 +1,4 @@
-Mean Absolute Error: 0.05549421515346193
-Mean Squared Error: 0.08819500857934087
-Root Mean Squared Error: 0.29697644448565425
+Cross Validation: 0.9832537476891925
+Mean Absolute Error: 0.05369918191667363
+Mean Squared Error: 0.08374799926601782
+Root Mean Squared Error: 0.2893924658072802
