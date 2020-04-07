@@ -2,9 +2,9 @@ import csv
 
 import numpy as np
 
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report
-from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split, cross_val_score
 
 
@@ -29,15 +29,15 @@ X_test = sc.transform(X_test)
 
 # #############################################################################
 # Fit model
-params = {'n_neighbors': 11}
-classifier = KNeighborsClassifier(**params)
+params = {}
+classifier = DecisionTreeClassifier(**params)
 
 classifier.fit(X_train, y_train)
 y_predict = classifier.predict(X_test)
 
 # #############################################################################
 # Set metrics
-f = open("result/KNeighborsClassifier.result", "a")
+f = open("result/DecisionTreeClassifier.result", "a")
 f.write('Cross Validation: ' + str(np.mean(cross_val_score(classifier, X_train, y_train, cv=5))) + '\n\n')
 f.write(classification_report(y_test, y_predict))
 f.close()
