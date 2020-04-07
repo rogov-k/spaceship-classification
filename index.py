@@ -4,7 +4,7 @@ import numpy as np
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split, cross_val_score
 
 
@@ -29,15 +29,15 @@ X_test = sc.transform(X_test)
 
 # #############################################################################
 # Fit model
-params = {'max_depth': 2, 'random_state': 0, 'n_estimators': 100}
-classifier = RandomForestClassifier(**params)
+params = {'n_neighbors': 11}
+classifier = KNeighborsClassifier(**params)
 
 classifier.fit(X_train, y_train)
 y_predict = classifier.predict(X_test)
 
 # #############################################################################
 # Set metrics
-f = open("result/RandomForestClassifier.result", "a")
+f = open("result/KNeighborsClassifier.result", "a")
 f.write('Cross Validation: ' + str(np.mean(cross_val_score(classifier, X_train, y_train, cv=5))) + '\n\n')
 f.write(classification_report(y_test, y_predict))
 f.close()
