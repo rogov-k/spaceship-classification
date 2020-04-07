@@ -1,10 +1,10 @@
 import csv
 
 import numpy as np
-import xgboost as xgb
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split, cross_val_score
 
 
@@ -29,16 +29,16 @@ X_test = sc.transform(X_test)
 
 # #############################################################################
 # Fit model
-params = {}
-classifier = xgb.XGBClassifier(**params)
+params = {'max_depth': 2, 'random_state': 0, 'n_estimators': 100}
+classifier = RandomForestClassifier(**params)
 
 classifier.fit(X_train, y_train)
 y_predict = classifier.predict(X_test)
 
 # #############################################################################
 # Set metrics
-f = open("result/XGBClassifier.result", "a")
-f.write('Cross Validation: ' + str(np.mean(cross_val_score(classifier, X_train, y_train, cv=5))) + '\n')
+f = open("result/RandomForestClassifier.result", "a")
+f.write('Cross Validation: ' + str(np.mean(cross_val_score(classifier, X_train, y_train, cv=5))) + '\n\n')
 f.write(classification_report(y_test, y_predict))
 f.close()
 
