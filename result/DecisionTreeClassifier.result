@@ -1,16 +1,16 @@
-Cross Validation: 0.9716410524965873
+Cross Validation: 0.8627046906379736
 
                    precision    recall  f1-score   support
 
-          Amateur       0.96      0.96      0.96      8734
-       Globalstar       1.00      1.00      1.00      9571
-Human Spaceflight       0.23      0.20      0.22       464
-         Intelsat       1.00      1.00      1.00     10007
-          Iridium       1.00      1.00      1.00     14892
-       Navigation       0.78      0.81      0.80      2415
-          Orbcomm       1.00      1.00      1.00      7060
-          Weather       0.89      0.87      0.88      4450
+          Amateur       0.93      1.00      0.96     43414
+       Globalstar       1.00      1.00      1.00     47636
+Human Spaceflight       1.00      0.18      0.30      2245
+         Intelsat       0.97      0.96      0.96     50405
+          Iridium       1.00      1.00      1.00     74428
+       Navigation       0.81      1.00      0.89     12146
+          Orbcomm       0.99      0.99      0.99     35228
+          Weather       0.89      0.74      0.81     22459
 
-        micro avg       0.97      0.97      0.97     57593
-        macro avg       0.86      0.86      0.86     57593
-     weighted avg       0.97      0.97      0.97     57593
+        micro avg       0.96      0.96      0.96    287961
+        macro avg       0.95      0.86      0.86    287961
+     weighted avg       0.97      0.96      0.96    287961
