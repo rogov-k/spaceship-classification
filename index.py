@@ -1,44 +1,27 @@
-import csv
-
+import pandas as pd
 import numpy as np
 
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import classification_report
-from sklearn.model_selection import train_test_split, cross_val_score
-
-
 # #############################################################################
-# Init data
-X = []
-y = []
-sc = StandardScaler()
+# Read data
+data = pd.read_csv('data/response.csv', sep=';', header=0)
 
-with open('data/response.csv') as f:
-    data = csv.reader(f)
-    for line in data:
-        row = line[0].split(';')
-        X.append(map(lambda x: float(x), row[:10]))
-        y.append(row[10:][0])
+# Determine correlation
+correlation = data.corr()
+correlation.to_csv("result/Correlation/base.csv")
+correlation = correlation.drop(columns=['EPHEMERIS_TYPE'])
+correlation = correlation.drop(['EPHEMERIS_TYPE'])
+correlation.to_csv("result/Correlation/base_without_nan.csv")
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20)
+# Minimum correlation
+min_correlation = pd.DataFrame(correlation.min())
+min_correlation.columns = ['Min']
+min_correlation = min_correlation.sort_values(by='Min')
+min_correlation.to_csv("result/Correlation/min.csv")
 
-# Feature Scaling
-X_train = sc.fit_transform(X_train)
-X_test = sc.transform(X_test)
-
-# #############################################################################
-# Fit model
-params = {}
-classifier = DecisionTreeClassifier(**params)
-
-classifier.fit(X_train, y_train)
-y_predict = classifier.predict(X_test)
-
-# #############################################################################
-# Set metrics
-f = open("result/DecisionTreeClassifier.result", "a")
-f.write('Cross Validation: ' + str(np.mean(cross_val_score(classifier, X_train, y_train, cv=5))) + '\n\n')
-f.write(classification_report(y_test, y_predict))
-f.close()
-
+# Maximum correlation
+max_correlation = pd.DataFrame(correlation.apply(lambda x:
+                                                 np.max(filter(lambda x: x != 1., x)),
+                                                 axis=1))
+max_correlation.columns = ['Max']
+max_correlation = max_correlation.sort_values(by='Max', ascending=False)
+max_correlation.to_csv("result/Correlation/max.csv")
