@@ -3,6 +3,7 @@ import numpy as np
 
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
 from sklearn.model_selection import cross_val_score
 
@@ -42,6 +43,19 @@ classifier.fit(X_train, y_train)
 y_predict = classifier.predict(X_test)
 
 f = open("result/KNeighborsClassifier.result", "a")
+f.write('Cross Validation: ' + str(np.mean(cross_val_score(classifier, X_train, y_train, cv=5))) + '\n\n')
+f.write(classification_report(y_test, y_predict))
+f.close()
+
+# * Random Forest Classifier
+print('Start: "Random forest" classifier')
+params = {'max_depth': 10, 'random_state': 0, 'n_estimators': 100}
+classifier = RandomForestClassifier(**params)
+
+classifier.fit(X_train, y_train)
+y_predict = classifier.predict(X_test)
+
+f = open("result/RandomForestClassifier.result", "a")
 f.write('Cross Validation: ' + str(np.mean(cross_val_score(classifier, X_train, y_train, cv=5))) + '\n\n')
 f.write(classification_report(y_test, y_predict))
 f.close()
