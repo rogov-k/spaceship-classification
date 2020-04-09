@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 
+import xgboost as xgb
+
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
@@ -56,6 +58,19 @@ classifier.fit(X_train, y_train)
 y_predict = classifier.predict(X_test)
 
 f = open("result/RandomForestClassifier.result", "a")
+f.write('Cross Validation: ' + str(np.mean(cross_val_score(classifier, X_train, y_train, cv=5))) + '\n\n')
+f.write(classification_report(y_test, y_predict))
+f.close()
+
+# * XGBoost Classifier
+print('Start: "XGBoost" classifier')
+params = {}
+classifier = xgb.XGBClassifier(**params)
+
+classifier.fit(X_train, y_train)
+y_predict = classifier.predict(X_test)
+
+f = open("result/XGBClassifier.result", "a")
 f.write('Cross Validation: ' + str(np.mean(cross_val_score(classifier, X_train, y_train, cv=5))) + '\n\n')
 f.write(classification_report(y_test, y_predict))
 f.close()
