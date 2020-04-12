@@ -1,5 +1,16 @@
 import pandas as pd
 import numpy as np
+import os
+
+
+directory = './data/type/'
+files = os.listdir(directory)
+types = map(lambda file_name: file_name.split('.')[0], files)
+
+for file in files:
+    print(file)
+
+exit(2)
 
 # #############################################################################
 # Read data
