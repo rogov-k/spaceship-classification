@@ -1,6 +1,17 @@
 import csv
 
 import numpy as np
+import os
+
+
+directory = './data/type/'
+files = os.listdir(directory)
+types = map(lambda file_name: file_name.split('.')[0], files)
+
+for file in files:
+    print(file)
+
+exit(2)
 
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import StandardScaler
