@@ -1,44 +1,88 @@
-import csv
+import os
 
-import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
 
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import classification_report
-from sklearn.model_selection import train_test_split, cross_val_score
+classes = [
+    'Amateur',
+    'Globalstar',
+    'Human Spaceflight',
+    'Intelsat',
+    'Iridium',
+    'Navigation',
+    'Orbcomm',
+    'Weather'
+]
+
+attributes = [
+    'MEAN_MOTION',
+    'ECCENTRICITY',
+    'INCLINATION',
+    'RA_OF_ASC_NODE',
+    'ARG_OF_PERICENTER',
+    'MEAN_ANOMALY',
+    'BSTAR',
+    'MEAN_MOTION_DOT',
+    'MEAN_MOTION_DDOT'
+]
 
 
-# #############################################################################
-# Init data
-X = []
-y = []
-sc = StandardScaler()
+def get_norads(class_name):
+    return map(lambda x: x.split('.')[0], os.listdir('data/' + class_name))
 
-with open('data/response.csv') as f:
-    data = csv.reader(f)
-    for line in data:
-        row = line[0].split(';')
-        X.append(map(lambda x: float(x), row[:10]))
-        y.append(row[10:][0])
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20)
+# class -> attribute -> norad
+def get_empty_graphic_data():
+    graphics_data = {}
+    for class_name in classes:
+        graphics_data[class_name] = {}
+        norads = get_norads(class_name)
+        for attribute_name in attributes:
+            graphics_data[class_name][attribute_name] = {}
+            for norad in norads:
+                graphics_data[class_name][attribute_name][norad] = []
 
-# Feature Scaling
-X_train = sc.fit_transform(X_train)
-X_test = sc.transform(X_test)
+    return graphics_data
 
-# #############################################################################
-# Fit model
-params = {}
-classifier = DecisionTreeClassifier(**params)
 
-classifier.fit(X_train, y_train)
-y_predict = classifier.predict(X_test)
+path = 'data/'
+graphics_data = get_empty_graphic_data()
+for class_name in classes:
+    files = os.listdir(path + class_name)
+    for file_name in files:
+        data = pd.read_csv(path + class_name + '/' + file_name, sep=';', header=0)
+        norad = file_name.split('.')[0]
+        for i, row in data.iterrows():
+            for attribute_name in attributes:
+                graphics_data.get(class_name) \
+                    .get(attribute_name) \
+                    .get(norad) \
+                    .append(row[attribute_name])
 
-# #############################################################################
-# Set metrics
-f = open("result/DecisionTreeClassifier.result", "a")
-f.write('Cross Validation: ' + str(np.mean(cross_val_score(classifier, X_train, y_train, cv=5))) + '\n\n')
-f.write(classification_report(y_test, y_predict))
-f.close()
-
+for class_name in classes:
+    norads = get_norads(class_name)
+    for attribute_name in attributes:
+        last_index = 0
+        for i, norad in enumerate(norads):
+            index = i % 5
+            last_index = index
+            if index == 0:
+                fig, image = plt.subplots(5, figsize=(16, 45))
+                fig.suptitle(attribute_name)
+            value = graphics_data.get(class_name).get(attribute_name).get(norad)
+            image[index].scatter(range(len(value)), value)
+            image[index].set_title(norad)
+            image[index].set_xlabel("Time")
+            image[index].set_ylabel("Value")
+            if index == 4:
+                if not os.path.exists('result/' + class_name + '/' + attribute_name):
+                    os.mkdir('result/' + class_name + '/' + attribute_name)
+                fig.savefig('result/' + class_name + '/' + attribute_name + '/' + str(i // 5) + '.png')
+                plt.close(fig)
+                plt.cla()
+        if last_index != 4:
+            if not os.path.exists('result/' + class_name + '/' + attribute_name):
+                os.mkdir('result/' + class_name + '/' + attribute_name)
+            fig.savefig('result/' + class_name + '/' + attribute_name + '/_.png')
+            plt.close(fig)
+            plt.cla()
