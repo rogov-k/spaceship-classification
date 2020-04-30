@@ -14,3 +14,51 @@ Human Spaceflight       0.17      0.01      0.02      2245
         micro avg       0.80      0.80      0.80    287961
         macro avg       0.68      0.65      0.65    287961
      weighted avg       0.79      0.80      0.79    287961
+Cross Validation: 0.47531420828410054
+
+                   precision    recall  f1-score   support
+
+          Amateur       0.52      0.60      0.56     44415
+       Globalstar       0.69      0.70      0.70     48138
+Human Spaceflight       0.16      0.06      0.09      2609
+         Intelsat       0.82      0.87      0.84     51618
+          Iridium       0.72      0.72      0.72     81987
+       Navigation       0.57      0.88      0.69     18522
+          Orbcomm       0.31      0.27      0.29     35669
+          Weather       0.51      0.22      0.30     25052
+
+        micro avg       0.64      0.64      0.64    308010
+        macro avg       0.54      0.54      0.52    308010
+     weighted avg       0.63      0.64      0.62    308010
+Cross Validation: 0.7346491176106025
+
+                   precision    recall  f1-score   support
+
+          Amateur       0.64      0.68      0.66     44415
+       Globalstar       0.73      0.91      0.81     48138
+Human Spaceflight       0.17      0.01      0.02      2609
+         Intelsat       0.85      0.95      0.90     51618
+          Iridium       0.97      0.91      0.94     81987
+       Navigation       0.85      0.65      0.74     18522
+          Orbcomm       0.81      0.77      0.79     35669
+          Weather       0.41      0.29      0.34     25052
+
+        micro avg       0.79      0.79      0.79    308010
+        macro avg       0.68      0.65      0.65    308010
+     weighted avg       0.79      0.79      0.79    308010
+Cross Validation: 0.7346491176106025
+
+                   precision    recall  f1-score   support
+
+          Amateur       0.64      0.68      0.66     44415
+       Globalstar       0.73      0.91      0.81     48138
+Human Spaceflight       0.17      0.01      0.02      2609
+         Intelsat       0.85      0.95      0.90     51618
+          Iridium       0.97      0.91      0.94     81987
+       Navigation       0.85      0.65      0.74     18522
+          Orbcomm       0.81      0.77      0.79     35669
+          Weather       0.41      0.29      0.34     25052
+
+        micro avg       0.79      0.79      0.79    308010
+        macro avg       0.68      0.65      0.65    308010
+     weighted avg       0.79      0.79      0.79    308010
